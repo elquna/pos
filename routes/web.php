@@ -15,16 +15,21 @@ use App\Http\Controllers\PagesController;
 |
 */
 
-/*Route::get('/admin', [AdminController::class, 'adminlogin'])->name('adminlogin');
-Route::post('mainlogin', [AdminController::class,'processlogin']);
-Route::get('admin/dashboard', [AdminController::class,'dashboard'])->name('dashboard');
-Route::get('admin/add_product', [AdminController::class,'addproduct'])->name('addproduct');
-Route::get('admin/view_products', [AdminController::class,'viewproducts'])->name('viewproducts');
-Route::get('admin/online_products', [AdminController::class,'onlineproducts'])->name('onlineproducts');
-Route::get('admin/offline_products', [AdminController::class,'offlineproduct'])->name('offlineproducts');
-Route::get('admin/formforproduct', [AdminController::class,'formforproduct'])->name('formforproduct');*/
 
 
-Route::get('/', [PagesController::class,'login'])->name('login');
+Route::get('/', [PagesController::class,'login'])->name('home');
 Route::post('mainlogin', [PagesController::class,'processlogin']);
 Route::get('pos/dashboard', [PagesController::class,'dashboard'])->name('dashboard');
+Route::get('admin/formforuser', [PagesController::class,'formforuser'])->name('formforuser');
+Route::post('admin/processaddnewuser', [PagesController::class,'processaddnewuser'])->name('processaddnewuser');
+Route::get('admin/viewusers', [PagesController::class,'viewusers']); 
+Route::get('admin/addcat', [PagesController::class,'addcat']); 
+Route::post('admin/processaddcategory', [PagesController::class,'processaddcategory'])->name('processaddcategory');
+Route::get('admin/viewcat', [PagesController::class,'viewcat']); 
+
+
+Route::get('admin/addproductform', [PagesController::class,'addproductform']); 
+Route::post('admin/processaddproduct', [PagesController::class,'processaddproduct']); 
+
+Route::get('admin/viewproducts', [PagesController::class,'viewproducts']); 
+

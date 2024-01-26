@@ -36,6 +36,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/core/colors/palette-gradient.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/timeline.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/dashboard-ecommerce.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/datatable/datatable.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/datatable/select2.css')}}">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -254,11 +256,23 @@
                 
                 <li class=" nav-item"><a href="#"><i class="la la-clipboard"></i><span class="menu-title" data-i18n="Invoice">Users</span></a>
                     <ul class="menu-content">
-                        <li><a class="menu-item" href=""><i></i><span data-i18n="Invoice Summary">View Users</span></a>
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="viewusers()"><i></i><span data-i18n="Invoice Summary">View Users</span></a>
                         </li>
-                        <li><a class="menu-item" href=""><i></i><span data-i18n="Invoice Template">Add User</span></a>
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="formforuser()"><i></i><span data-i18n="Invoice Template">Add User</span></a>
                         </li>
                        
+                    </ul>
+                </li>
+
+
+                <li class=" nav-item"><a href="#"><i class="la la-check-circle-o"></i><span class="menu-title" data-i18n="Components">Mangage Category</span></a>
+                    <ul class="menu-content">
+                        
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="viewCat()"><i></i><span data-i18n="Callout">View Categories</span></a>
+                        </li>
+                     
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="addCat()"><i></i><span data-i18n="Spinners">Add Category</span></a>
+                        </li>
                     </ul>
                 </li>
 
@@ -277,10 +291,10 @@
                 <li class=" nav-item"><a href="#"><i class="la la-server"></i><span class="menu-title" data-i18n="Components">Mangage Products</span></a>
                     <ul class="menu-content">
                         
-                        <li><a class="menu-item" href="component-callout.html"><i></i><span data-i18n="Callout">View Products</span></a>
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="viewProducts()"><i></i><span data-i18n="Callout">View Products</span></a>
                         </li>
                      
-                        <li><a class="menu-item" href="component-spinners.html"><i></i><span data-i18n="Spinners">Add Product</span></a>
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="addProductForm()"><i></i><span data-i18n="Spinners">Add Product</span></a>
                         </li>
                     </ul>
                 </li>
@@ -317,7 +331,7 @@
         <div class="content-wrapper">
             <div class="content-header row">
             </div>
-            <div class="content-body">
+            <div class="content-body" id="contents">
                 <!-- eCommerce statistic -->
                 <div class="row">
                     <div class="col-xl-3 col-lg-6 col-12">
@@ -514,9 +528,26 @@
 
     <!-- BEGIN: Page JS-->
     <script src="{{asset('app-assets/js/scripts/pages/dashboard-ecommerce.js')}}"></script>
+   
+
+    <script src="{{asset('app-assets/datatable/jquery.js')}}"></script>
+
+    <script src="{{asset('app-assets/datatable/datatable.js')}}"></script>
+    <script src="{{asset('app-assets/datatable/datatable_buttons.js')}}"></script>
+    <script src="{{asset('app-assets/datatable/datatable_zip.js')}}"></script>
+    <script src="{{asset('app-assets/datatable/datatable_pdf_font.js')}}"></script>
+    <script src="{{asset('app-assets/datatable/datatable_html5_button.js')}}"></script>
+    <script src="{{asset('app-assets/datatable/datatable__button_new.js')}}"></script>
+    <script src="{{asset('app-assets/datatable/select2.js')}}"></script>
+    <script src="{{asset('app-assets/js/core/admin.js')}}"></script>
     <!-- END: Page JS-->
 
 </body>
 <!-- END: Body-->
 
 </html>
+
+<input  type="hidden" id="t_" value="{{ csrf_token()}}">
+    <script>
+          var site = "<?php echo url('/');?>"
+    </script>
