@@ -20,13 +20,12 @@
                                     <table class="table table-bordered table-striped" id="myTable">
                                         <thead>
                                             <tr>
-                                            <th>Date Created</th>
+                                         
                                                 <th>Name</th>
                                                 <th>Price</th>
-                                               
+                                               <th>Available QTY</th>
                                                 <th>Category</th>
-                                                <th>Added By</th>
-                                                <th></th>
+                                               
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -34,13 +33,12 @@
                                                 
                                         
                                             <tr>
-                                                <td>{{$key->created_at}}</td>
+                                          
                                                 <td>{{$key->name}}</td>
-                                                <td>{{$key->price}}</td>
-                                              
+                                                <td>{{number_format($key->price,2)}}</td>
+                                                <td>{{$key->remaining}}</td>
                                                 <td>{{$key->category->category}}</td>
-                                                <td>{{$key->added->firstname}}  {{$key->added->lastname}}</td>
-                                                <td><a href="{{route('barcode',['serial'=>$key->slug])}}" target="_blank">Print Bar code</td>
+                                              
                                             </tr>
 
                                             <?php } ?>

@@ -26,10 +26,22 @@ Route::get('admin/viewusers', [PagesController::class,'viewusers']);
 Route::get('admin/addcat', [PagesController::class,'addcat']); 
 Route::post('admin/processaddcategory', [PagesController::class,'processaddcategory'])->name('processaddcategory');
 Route::get('admin/viewcat', [PagesController::class,'viewcat']); 
-
-
 Route::get('admin/addproductform', [PagesController::class,'addproductform']); 
 Route::post('admin/processaddproduct', [PagesController::class,'processaddproduct']); 
-
 Route::get('admin/viewproducts', [PagesController::class,'viewproducts']); 
+Route::get('admin/addstockform', [PagesController::class,'addstockform']); 
+Route::post('admin/processaddstock', [PagesController::class,'processaddstock']); 
 
+Route::get('/admin/viewstocks', [PagesController::class,'viewstocks']); 
+
+Route::get('/admin/viewstocksavailable', [PagesController::class,'viewstocksavailable']); 
+Route::get('/admin/makesales', [PagesController::class,'makesales']); 
+
+Route::post('admin/showaproductduringsale', [PagesController::class,'showaproductduringsale']);
+
+Route::post('admin/showaproductduringsalewithcode', [PagesController::class,'showaproductduringsalewithcode']);
+
+
+Route::post('admin/processaddtocart', [PagesController::class,'processaddtocart']);
+
+Route::get('admin/barcode/{serial}', [PagesController::class,'barcode'])->name('barcode');

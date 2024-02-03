@@ -276,8 +276,9 @@ function ProcessAddProduct()
   var price = Number(document.getElementById('price').value);
   if(price == ''){ReportError('Price is required','err') ; return;}
 
-  var price = Number(document.getElementById('price').value);
+  
   if(isNaN(price)){ReportError('Price must be a number','err') ; return;}
+  if(price < 1){ReportError('Price must be greater than 0','err') ; return;}
 
   var url = site + "/admin/processaddproduct";
   var xml = new XMLHttpRequest();
@@ -334,11 +335,312 @@ function  viewProducts()
            $('#myTable').DataTable( {
             dom: 'Bfrtip',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'copy', 'csv', 'excel', 'print'
             ]
         } );
        }
 
     }
     xml.send();
+}
+
+
+function addstockform()
+{
+  var url = site + "/admin/addstockform";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("GET", url, true);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("contents").innerHTML = xml.responseText;
+           $('#productid').select2();
+       }
+
+    }
+    xml.send();
+}
+
+
+function ProcessAddStock()
+{
+  var productid = document.getElementById('productid').value;
+  if(productid == ''){ReportError('Product  is required','err') ; return;}
+
+  
+  var quantity = Number(document.getElementById('quantity').value);
+  if(quantity == ''){ReportError('Price is required','err') ; return;}
+
+  if(isNaN(quantity)){ReportError('Quantity must be a number','err') ; return;}
+
+
+  if(quantity < 1){ReportError('Quantity must be greater than 0','err') ; return;}
+
+  var url = site + "/admin/processaddstock";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("POST", url, true);
+
+  fd = new FormData();
+  
+  fd.append("productid",productid);
+  fd.append("quantity",quantity);
+  
+
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+   doXHREvents(xml);
+   document.getElementById("bttn").style.display = "none";
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+        sessionchecker(xml.responseText);
+           //document.getElementById("contents").innerHTML = xml.responseText;
+           viewStocks();
+       }
+
+    }
+    xml.send(fd);
+}
+
+function viewStocks()
+{
+  var url = site + "/admin/viewstocks";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("GET", url, true);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("contents").innerHTML = xml.responseText;
+           $('#myTable').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'print'
+            ]
+        } );
+       }
+
+    }
+    xml.send();
+}
+
+function viewstockavailable()
+{
+  var url = site + "/admin/viewstocksavailable";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("GET", url, true);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("contents").innerHTML = xml.responseText;
+           $('#myTable').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'print'
+            ]
+        } );
+       }
+
+    }
+    xml.send();
+}
+
+
+function makesales()
+{
+  var url = site + "/admin/makesales";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("GET", url, true);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("contents").innerHTML = xml.responseText;
+           $('#productid').select2();
+       }
+
+    }
+    xml.send();
+}
+
+
+function showAProductDuringSale(id)
+{
+  var url = site + "/admin/showaproductduringsale";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("POST", url, true);
+
+  fd = new FormData();
+  fd.append("productid",id);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("productzone").innerHTML = xml.responseText;
+           
+       }
+
+    }
+    xml.send(fd);
+}
+
+function processAddTocart(id)
+{
+  var url = site + "/admin/processaddtocart";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("POST", url, true);
+
+  var qty = Number(document.getElementById("qty").value);
+  var serial = document.getElementById("serial").value;
+
+  if(isNaN(qty))
+  {
+    document.getElementById("err").innerHTML = "Quantity is needed";
+    return;
+  }
+
+  if(qty == 0)
+  {
+    document.getElementById("err").innerHTML = "Quantity is needed";
+    return;
+  }
+
+  fd = new FormData();
+  fd.append("productid",id);
+  fd.append("qty",qty);
+  fd.append("serial",serial);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("order").innerHTML = xml.responseText;
+           document.getElementById("productzone").innerHTML = "";
+           
+       }
+
+    }
+    xml.send(fd);
+}
+
+
+function calculatesubtotal()
+{
+  var qty = Number(document.getElementById("qty").value);
+  pr  = Number(document.getElementById("pr").value);
+
+  var total = qty * pr;
+  document.getElementById("sub").value = total;
+  
+
+}
+
+
+
+
+function scann(events,thi)
+{
+  events.preventDefault(); // Prevent the form from submitting
+  events.stopImmediatePropagation();
+  events.stopImmediatePropagation();
+
+  var rcode = document.getElementById("rcode").value;
+  var len =  rcode.length;
+
+  var url = site + "/admin/showaproductduringsalewithcode";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("POST", url, true);
+
+  fd = new FormData();
+  fd.append("rcode",rcode);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("productzone").innerHTML = xml.responseText;
+           document.getElementById("rcode").value = "";
+           
+       }
+
+    }
+    xml.send(fd);
+  
+
 }

@@ -136,49 +136,41 @@
                         <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-bell"></i><span class="badge badge-pill badge-danger badge-up badge-glow">5</span></a>
                             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                 <li class="dropdown-menu-header">
-                                    <h6 class="dropdown-header m-0"><span class="grey darken-2">Notifications</span></h6><span class="notification-tag badge badge-danger float-right m-0">5 New</span>
+                                    <h6 class="dropdown-header m-0"><span class="grey darken-2">Notifications</span></h6><span class="notification-tag badge badge-danger float-right m-0">0</span>
                                 </li>
                                 <li class="scrollable-container media-list w-100"><a href="javascript:void(0)">
                                         <div class="media">
                                             <div class="media-left align-self-center"><i class="ft-plus-square icon-bg-circle bg-cyan mr-0"></i></div>
                                             <div class="media-body">
-                                                <h6 class="media-heading">You have new order!</h6>
-                                                <p class="notification-text font-small-3 text-muted">Lorem ipsum dolor sit amet, consectetuer elit.</p><small>
-                                                    <time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">30 minutes ago</time></small>
+                                                
                                             </div>
                                         </div>
                                     </a><a href="javascript:void(0)">
                                         <div class="media">
                                             <div class="media-left align-self-center"><i class="ft-download-cloud icon-bg-circle bg-red bg-darken-1 mr-0"></i></div>
                                             <div class="media-body">
-                                                <h6 class="media-heading red darken-1">99% Server load</h6>
-                                                <p class="notification-text font-small-3 text-muted">Aliquam tincidunt mauris eu risus.</p><small>
-                                                    <time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">Five hour ago</time></small>
+                                                
                                             </div>
                                         </div>
                                     </a><a href="javascript:void(0)">
                                         <div class="media">
                                             <div class="media-left align-self-center"><i class="ft-alert-triangle icon-bg-circle bg-yellow bg-darken-3 mr-0"></i></div>
                                             <div class="media-body">
-                                                <h6 class="media-heading yellow darken-3">Warning notifixation</h6>
-                                                <p class="notification-text font-small-3 text-muted">Vestibulum auctor dapibus neque.</p><small>
-                                                    <time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">Today</time></small>
+                                               
                                             </div>
                                         </div>
                                     </a><a href="javascript:void(0)">
                                         <div class="media">
                                             <div class="media-left align-self-center"><i class="ft-check-circle icon-bg-circle bg-cyan mr-0"></i></div>
                                             <div class="media-body">
-                                                <h6 class="media-heading">Complete the task</h6><small>
-                                                    <time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">Last week</time></small>
+                                               
                                             </div>
                                         </div>
                                     </a><a href="javascript:void(0)">
                                         <div class="media">
                                             <div class="media-left align-self-center"><i class="ft-file icon-bg-circle bg-teal mr-0"></i></div>
                                             <div class="media-body">
-                                                <h6 class="media-heading">Generate monthly report</h6><small>
-                                                    <time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">Last month</time></small>
+                                                
                                             </div>
                                         </div>
                                     </a></li>
@@ -230,7 +222,7 @@
                                 <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center" href="javascript:void(0)">Read all messages</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">John Doe</span><span class="avatar avatar-online"><img src="../../../app-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span></a>
+                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">{{session('name')}}</span><span class="avatar avatar-online"><img src="../../../app-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span></a>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a><a class="dropdown-item" href="#"><i class="ft-clipboard"></i> Todo</a><a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a>
                                 <div class="dropdown-divider"></div><a class="dropdown-item" href=""><i class="ft-power"></i> Logout</a>
                             </div>
@@ -249,7 +241,7 @@
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
-                <li class="active"><a href="index.html"><i class="la la-home"></i><span class="menu-title" data-i18n="eCommerce Dashboard">eCommerce Dashboard</span></a>
+                <li class="active"><a href=""><i class="la la-home"></i><span class="menu-title" data-i18n="eCommerce Dashboard">Sales Help</span></a>
                 </li>
               
 
@@ -302,18 +294,23 @@
                 <li class=" nav-item"><a href="#"><i class="la la-list"></i><span class="menu-title" data-i18n="Components">Mangage Stocks</span></a>
                     <ul class="menu-content">
                         
-                        <li><a class="menu-item" href=""><i></i><span data-i18n="Callout">View Stocks</span></a>
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="viewstockavailable()"><i></i><span data-i18n="Spinners">View Available Stock</span></a>
+                        </li>
+
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="viewStocks()"><i></i><span data-i18n="Callout">View Stocks additions</span></a>
                         </li>
                      
-                        <li><a class="menu-item" href=""><i></i><span data-i18n="Spinners">Add Stock</span></a>
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="addstockform()"><i></i><span data-i18n="Spinners">Add Stock </span></a>
                         </li>
+
+                        
                     </ul>
                 </li>
 
 
                 <li class=" nav-item"><a href="#"><i class="la la-shopping-cart"></i><span class="menu-title" data-i18n="Bootstrap Tables">Make sales</span></a>
                     <ul class="menu-content">
-                        <li><a class="menu-item" href=""><i></i><span data-i18n="Basic Tables">Make sales</span></a>
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="makesales()"><i></i><span data-i18n="Basic Tables">Make sales</span></a>
                         </li>
                         
                     </ul>
@@ -551,3 +548,5 @@
     <script>
           var site = "<?php echo url('/');?>"
     </script>
+
+    <div id="loader"></div>

@@ -3,7 +3,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Products</h4>
+                                <h4 class="card-title">Users</h4>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -20,27 +20,22 @@
                                     <table class="table table-bordered table-striped" id="myTable">
                                         <thead>
                                             <tr>
-                                            <th>Date Created</th>
-                                                <th>Name</th>
-                                                <th>Price</th>
-                                               
-                                                <th>Category</th>
-                                                <th>Added By</th>
-                                                <th></th>
+                                                <th>Date</th>
+                                                <th>Product</th>
+                                                <th>Quantity added</th>
+                                                <th>Staff</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($products as $key) {?>
+                                            <?php foreach ($st as $key) {?>
                                                 
                                         
                                             <tr>
                                                 <td>{{$key->created_at}}</td>
-                                                <td>{{$key->name}}</td>
-                                                <td>{{$key->price}}</td>
-                                              
-                                                <td>{{$key->category->category}}</td>
-                                                <td>{{$key->added->firstname}}  {{$key->added->lastname}}</td>
-                                                <td><a href="{{route('barcode',['serial'=>$key->slug])}}" target="_blank">Print Bar code</td>
+                                                <td>{{$key->product->name}}</td>
+                                                <td>{{$key->quantity}}</td>
+                                                <td>{{$key->user->firstname}}</td>
+                                                
                                             </tr>
 
                                             <?php } ?>

@@ -8,6 +8,9 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Activitylog;
+use App\Models\Stock;
+use App\Models\Cart;
+
 
 
 class PagesController extends Controller
@@ -142,6 +145,31 @@ class PagesController extends Controller
       }
 
 
+      public function  processaddstock(Request $request)
+      {
+          $this->sessionchecker();
+
+          $product = Product::where('id',$request->productid)->first();
+          
+          $stock = new Stock();
+          $stock->product_id = $request->productid;
+          $stock->quantity = $request->quantity;
+          $stock->category_id = $product->category_id;
+          $stock->branch_id = session('branch_id');
+          $stock->added_by = session('id');
+          $stock->save();
+
+          $product->remaining = $product->remaining + $request->quantity;
+          $product->save();
+       
+      
+          $action  = "Added stock of product : ". $product->name ;
+          $this->auditLogger($action, $stock, $request->ip());
+         
+        
+      }
+
+
       public function viewcat()
       {
         $this->sessionchecker();
@@ -190,6 +218,83 @@ class PagesController extends Controller
         }
         return view('admin.ViewProducts')->with(['products'=>$pr]);
       }
+
+      public function addstockform()
+      {
+        $pr =  Product::where('branch_id', session('branch_id'))->get();
+        return view('admin.AddStockForm')->with(['pr'=>$pr]);
+      }
+
+
+      public function viewstocks()
+      {
+        $st =  Stock::where('branch_id', session('branch_id'))->get();
+        return view('admin.ViewStock')->with(['st'=>$st]);
+      }
+
+      public function viewstocksavailable()
+      {
+        $this->sessionchecker();
+
+        $pr =  Product::where('branch_id', session('branch_id'))->where('trashed',0)->orderby('id','desc')->where('remaining','>',0)->get();
+        foreach($pr as $p)
+        {
+        
+          $p->category = Category::where('id',$p->category_id)->first();
+        }
+        return view('admin.AvailableStock')->with(['products'=>$pr]);
+      }
+
+      public function makesales()
+      {
+        $this->sessionchecker();
+        $pr =  Product::where('branch_id', session('branch_id'))->where('trashed',0)->orderby('id','desc')->get();
+        
+        $cartsession  = time().substr(str_shuffle("ABCDEFGHIJKLMNOP"),-2);
+        return view('admin.MakeSales')->with(['cartsession'=>$cartsession, 'pr'=>$pr]);
+        
+      }
+  
+      public function showaproductduringsale(Request $request)
+      {
+        $this->sessionchecker();
+        $pro = Product::where('id',$request->productid)->first();
+        return view('admin.ShowaProductDuringSale')->with(['pro'=>$pro]);
+      }
+
+      public function showaproductduringsalewithcode(Request $request)
+      {
+        $this->sessionchecker();
+        $pro = Product::where('slug',$request->rcode)->first();
+        return view('admin.ShowaProductDuringSale')->with(['pro'=>$pro]);
+      }
+
+      public function processaddtocart(Request $request)
+      {
+        $this->sessionchecker();
+        $product =  Product::where('id', $request->productid)->first();
+
+        $cart = new Cart();
+        $cart->quantity = $request->qty;
+        $cart->price = $product->price;
+        $cart->product_id = $request->productid;
+        $cart->subtotal = $product->price * $request->qty;
+        $cart->cartsession = $request->serial;
+        $cart->save();
+
+        $all = Cart::where('cartsession', $cart->cartsession)->orderby('id','desc')->get();
+        
+
+        return view('admin.Cart')->with(['all'=>$all]);
+      }
+
+      public function barcode($serial)
+      {
+        $pro =  Product::where('slug',$serial)->first();
+        return view('admin.Barcode')->with(['pro'=>$pro]);
+      }
+
+
 
 
 
