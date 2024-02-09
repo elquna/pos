@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('cartsession')->nullable();
+            $table->string('cartsession')->unique();
             $table->unsignedInteger('subtotal')->nullable();
             $table->string('paymethod')->nullable();
             $table->integer('customer_id')->nullable();
@@ -25,7 +25,9 @@ class CreateOrdersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('customer_name')->nullable();
             $table->integer('tax')->nullable();
-
+            $table->integer('added_by')->nullable();
+            $table->integer('branch_id')->nullable();
+            
 
         });
     }

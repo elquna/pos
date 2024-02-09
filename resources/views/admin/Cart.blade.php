@@ -15,13 +15,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                          @php 
+                          $n = 0;
+                          $sums = 0;
+                          @endphp
                             @foreach($all as $one)
+                            @php $n = $n + 1;
+                            $sums = $sums + $one->subtotal;
+                           @endphp 
                             <tr>
                             <th>{{$one->product->name}}</th>
                             <td>{{$one->quantity}}</td>
                             <td>{{number_format($one->price,2)}}</td>
                             <td>{{number_format($one->subtotal,2)}}</td>
-                            <td>X</td>
+                            <td><button onclick="deleteFromcart('{{$one->id}}','{{$one->cartsession}}')">X</button></td>
                             </tr>
                             @endforeach
                             
@@ -46,11 +53,11 @@
                         <div class="col-md-12" style="height:20px"></div>
 
                         <div class="col-md-6">
-                        <input type="text"  class="form-control"  placeholder="Customer Name" > 
+                        <input type="text"  class="form-control"  placeholder="Customer Phone" id="phone" > 
                         </div>
 
                         <div class="col-md-6">
-                        <input type="text"  class="form-control"  placeholder="Customer Name" > 
+                        <input type="text"  class="form-control"  placeholder="Customer Address" id="address" > 
                         </div>
 
                         <div class="col-md-12" style="height:20px"></div>
@@ -58,7 +65,9 @@
                         
 
                         <div class="col-md-12">
-                         <button class="btn btn-primary col-md-12"> Submit </button>
+                          @if($n > 0)
+                         <button class="btn btn-primary col-md-12" onclick="processcheckout()"> Submit and Print &nbsp; &nbsp;  &nbsp;  &nbsp; {{number_format($sums,2)}}</button>
+                         @endif
                         </div>
 
 

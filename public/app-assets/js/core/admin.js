@@ -644,3 +644,195 @@ function scann(events,thi)
   
 
 }
+
+
+function processcheckout()
+{
+  
+
+  var serial = document.getElementById("serial").value;
+  var customer_name = document.getElementById("customer_name").value;
+  var phone = document.getElementById("phone").value;
+  var address = document.getElementById("address").value;
+  var paymentmethod = document.getElementById("paymentmethod").value;
+
+  if(paymentmethod == "Payment Method")
+  {
+    alert("Plese select payment method"); return;
+  }
+  
+
+  var url = site + "/admin/processcheckout";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("POST", url, true);
+
+  fd = new FormData();
+  fd.append("serial",serial);
+  fd.append("customer_name",customer_name);
+  fd.append("address",address);
+  fd.append("paymentmethod",paymentmethod);
+  fd.append("phone",phone);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("productzone").innerHTML = xml.responseText;
+           document.getElementById("rcode").value = "";
+           window.location.href= site + "/pos/print/" + serial;
+           
+       }
+
+    }
+    xml.send(fd);
+  
+}
+
+function deleteFromcart(id,cartsession)
+{
+
+  var url = site + "/admin/deletefromcart";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("POST", url, true);
+
+  fd = new FormData();
+  fd.append("id",id);
+  fd.append("cartsession",cartsession)
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("order").innerHTML = xml.responseText;
+           document.getElementById("productzone").innerHTML = "";
+           
+       }
+
+    }
+    xml.send(fd);
+}
+
+function saleshistory()
+{
+  var url = site + "/admin/saleshistory";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("GET", url, true);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("contents").innerHTML = xml.responseText;
+           $('#myTable').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'print'
+            ]
+        } );
+       }
+
+    }
+    xml.send();
+}
+
+
+function flexiblehistory()
+{
+  var url = site + "/admin/flexiblehistory";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("GET", url, true);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("contents").innerHTML = xml.responseText;
+           $('#myTable').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'print'
+            ]
+        } );
+       }
+
+    }
+    xml.send();
+}
+
+
+function doflexiblesearch()
+{
+  var enddate = document.getElementById("enddate").value;
+  var startdate = document.getElementById("startdate").value
+
+
+  var url = site + "/admin/deletefromcart";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("POST", url, true);
+
+  fd = new FormData();
+  fd.append("id",id);
+  fd.append("cartsession",cartsession)
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("contents").innerHTML = xml.responseText;
+           $('#myTable').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'print'
+            ]
+        } );
+           
+       }
+
+    }
+    xml.send(fd);
+}

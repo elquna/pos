@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Activitylog;
 use App\Models\Stock;
 use App\Models\Cart;
+use App\Models\Order;
 
 
 
@@ -295,6 +296,91 @@ class PagesController extends Controller
       }
 
 
+      public function processcheckout(Request $request)
+      {
+        $this->sessionchecker();
+        $order = new Order();
+
+        $pullcart = Cart::where('cartsession',$request->serial)->get();
+        $sum = Cart::where('cartsession',$request->serial)->sum('subtotal');
+
+        $order->cartsession = $request->serial;
+        $order->subtotal = $sum;
+        $order->paymethod = $request->paymentmethod;
+        $order->address = $request->address;
+        $order->customer_name = $request->customer_name;
+        $order->added_by  =  session('name');
+        $order->user_id = session('id');
+        $order->branch_id = session('branch_id');
+        $order->phone = $request->phone;
+        try{
+        $order->save();
+
+            if($order!= NULL)
+            {
+               foreach($pullcart as $one)
+               {
+                $pro = Product::where('id', $one->product_id)->first();
+                $pro->remaining = $pro->remaining - $one->quantity;
+                $pro->save();
+               }
+
+               $action  = "Made sales with code : ". $request->serial ;
+               $this->auditLogger($action, $order, $request->ip());
+            }
+        }
+        catch(\Exception $e){
+
+        }
+
+        
+
+        
+      }
+
+    public function printreceipt($serial)
+    {
+      $pullcart = Cart::where('cartsession',$serial)->with('product')->get();
+      $order = Order::where('cartsession', $serial)->first();
+      return view('admin.Print')->with(['pullcart'=>$pullcart, 'order'=>$order]);
+    }
+
+    public function deletefromcart(Request $request)
+    {
+      $this->sessionchecker();
+      $cart = Cart::where('id', $request->id)->first();
+      if($cart != NULL)
+      {
+        $cart->delete();
+      }
+      $all = Cart::where('cartsession', $request->cartsession)->orderby('id','desc')->get();
+      return view('admin.Cart')->with(['all'=>$all]);
+    }
+
+
+    public function saleshistory()
+    {
+        $today = date("Y-m-d");
+        
+
+        $orders = Order::where('created_at','LIKE',"%{$today}%")->get();
+        $sum  = Order::where('created_at','LIKE',"%{$today}%")->sum('subtotal');
+
+        return view('admin.ViewSales')->with(['orders'=>$orders, 'tot'=>$sum]);
+    }
+
+    
+    public function flexiblehistory()
+    {
+      
+        
+
+        $orders = Order::orderby('id','desc')->take(100)->get();
+        $sum = Order::orderby('id','desc')->take(100)->sum('subtotal');
+        
+
+        return view('admin.FlexibleSales')->with(['orders'=>$orders, 'tot'=>$sum]);
+    }
 
 
 

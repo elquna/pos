@@ -45,3 +45,12 @@ Route::post('admin/showaproductduringsalewithcode', [PagesController::class,'sho
 Route::post('admin/processaddtocart', [PagesController::class,'processaddtocart']);
 
 Route::get('admin/barcode/{serial}', [PagesController::class,'barcode'])->name('barcode');
+
+Route::post('admin/processcheckout', [PagesController::class,'processcheckout']);
+Route::get('pos/print/{serial}', [PagesController::class,'printreceipt']);
+
+Route::post('admin/deletefromcart', [PagesController::class,'deletefromcart']);
+
+Route::get('admin/saleshistory', [PagesController::class,'saleshistory']);
+
+Route::get('admin/flexiblehistory', [PagesController::class,'flexiblehistory']);

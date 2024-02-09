@@ -57,7 +57,7 @@
             <div class="navbar-header">
                 <ul class="nav navbar-nav flex-row">
                     <li class="nav-item mobile-menu d-lg-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
-                    <li class="nav-item mr-auto"><a class="navbar-brand" href="index.html"><img class="brand-logo" alt="modern admin logo" src="../../../app-assets/images/logo/logo.png">
+                    <li class="nav-item mr-auto"><a class="navbar-brand" href="index.html"><img class="brand-logo" alt="modern admin logo" src="{{asset('app-assets/images/logo/logo.png')}}">
                             <h3 class="brand-text">Modern</h3>
                         </a></li>
                     <li class="nav-item d-none d-lg-block nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="toggle-icon ft-toggle-right font-medium-3 white" data-ticon="ft-toggle-right"></i></a></li>
@@ -269,16 +269,7 @@
                 </li>
 
 
-                <li class=" nav-item"><a href="#"><i class="la la-check-circle-o"></i><span class="menu-title" data-i18n="Components">Mangage Orders</span></a>
-                    <ul class="menu-content">
-                        
-                        <li><a class="menu-item" href="component-callout.html"><i></i><span data-i18n="Callout">View Orders</span></a>
-                        </li>
-                     
-                        <li><a class="menu-item" href="component-spinners.html"><i></i><span data-i18n="Spinners">Add Order</span></a>
-                        </li>
-                    </ul>
-                </li>
+               
                
                 <li class=" nav-item"><a href="#"><i class="la la-server"></i><span class="menu-title" data-i18n="Components">Mangage Products</span></a>
                     <ul class="menu-content">
@@ -291,7 +282,7 @@
                     </ul>
                 </li>
 
-                <li class=" nav-item"><a href="#"><i class="la la-list"></i><span class="menu-title" data-i18n="Components">Mangage Stocks</span></a>
+                <li class=" nav-item"><a href="#"><i class="la la-list"></i><span class="menu-title" data-i18n="Components">Manage Stocks</span></a>
                     <ul class="menu-content">
                         
                         <li><a class="menu-item" href="javascript:void(0)" onclick="viewstockavailable()"><i></i><span data-i18n="Spinners">View Available Stock</span></a>
@@ -308,13 +299,21 @@
                 </li>
 
 
-                <li class=" nav-item"><a href="#"><i class="la la-shopping-cart"></i><span class="menu-title" data-i18n="Bootstrap Tables">Make sales</span></a>
+                <li class=" nav-item"><a href="#"><i class="la la-shopping-cart"></i><span class="menu-title" data-i18n="Bootstrap Tables">Manage sales</span></a>
                     <ul class="menu-content">
                         <li><a class="menu-item" href="javascript:void(0)" onclick="makesales()"><i></i><span data-i18n="Basic Tables">Make sales</span></a>
+                        </li>
+
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="saleshistory()"><i></i><span data-i18n="Basic Tables">Today Sales History</span></a>
+                        </li>
+
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="flexiblehistory()"><i></i><span data-i18n="Basic Tables">Flexible Sales History</span></a>
                         </li>
                         
                     </ul>
                 </li>
+
+                
                 
             
             </ul>
