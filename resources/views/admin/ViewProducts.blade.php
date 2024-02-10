@@ -26,7 +26,9 @@
                                                
                                                 <th>Category</th>
                                                 <th>Added By</th>
-                                                <th></th>
+                                                <th>Edit</th>
+                                                <th>Print Big</th>
+                                                <th>Print Small</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -40,7 +42,10 @@
                                               
                                                 <td>{{$key->category->category}}</td>
                                                 <td>{{$key->added->firstname}}  {{$key->added->lastname}}</td>
+                                                <td><button onclick="openEdit('{{$key->slug}}')">Edit</button></td>
+
                                                 <td><a href="{{route('barcode',['serial'=>$key->slug])}}" target="_blank">Print Bar code</td>
+                                                <td><a href="{{route('barcodesmall',['serial'=>$key->slug])}}" target="_blank">Print Bar code</td>
                                             </tr>
 
                                             <?php } ?>

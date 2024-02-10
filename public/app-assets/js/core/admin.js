@@ -801,16 +801,201 @@ function doflexiblesearch()
   var enddate = document.getElementById("enddate").value;
   var startdate = document.getElementById("startdate").value
 
+  if(enddate == "" || startdate == "")
+  {
+    alert("Plese provide Start date and end date"); return;
+  }
 
-  var url = site + "/admin/deletefromcart";
+
+  var url = site + "/admin/doflexiblesearch";
   var xml = new XMLHttpRequest();
   var t = document.getElementById('t_').value;
   var xml = new XMLHttpRequest();
   xml.open("POST", url, true);
 
   fd = new FormData();
+  fd.append("enddate",enddate);
+  fd.append("startdate", startdate)
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("reloadd").innerHTML = xml.responseText;
+           $('#myTable').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'print'
+            ]
+        } );
+           
+       }
+
+    }
+    xml.send(fd);
+}
+
+
+function openEdit(slug)
+{
+  var url = site + "/admin/openproducttoedit/" + slug;
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("GET", url, true);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("contents").innerHTML = xml.responseText;
+       }
+
+    }
+    xml.send();
+}
+
+function ProcessEditProduct(id)
+{
+  var name = document.getElementById('name').value;
+  if(name == ''){ReportError('Product Name is required','err') ; return;}
+
+ 
+  var price = Number(document.getElementById('price').value);
+  if(price == ''){ReportError('Price is required','err') ; return;}
+
+  
+  if(isNaN(price)){ReportError('Price must be a number','err') ; return;}
+  if(price < 1){ReportError('Price must be greater than 0','err') ; return;}
+
+  var url = site + "/admin/processeditproduct";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("POST", url, true);
+
+  fd = new FormData();
+  fd.append("name",name);
   fd.append("id",id);
-  fd.append("cartsession",cartsession)
+  fd.append("price",price);
+  
+
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+   doXHREvents(xml);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+        sessionchecker(xml.responseText);
+           //document.getElementById("contents").innerHTML = xml.responseText;
+           viewProducts();
+       }
+
+    }
+    xml.send(fd);
+}
+
+
+function removestockform()
+{
+  var url = site + "/admin/removestockform";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("GET", url, true);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("contents").innerHTML = xml.responseText;
+           $('#productid').select2();
+       }
+
+    }
+    xml.send();
+}
+
+
+function ProcessRemoveStock()
+{
+  var productid = document.getElementById('productid').value;
+  if(productid == ''){ReportError('Product  is required','err') ; return;}
+
+  
+  var quantity = Number(document.getElementById('quantity').value);
+  if(quantity == ''){ReportError('Price is required','err') ; return;}
+
+  if(isNaN(quantity)){ReportError('Quantity must be a number','err') ; return;}
+
+
+  if(quantity < 1){ReportError('Quantity must be greater than 0','err') ; return;}
+
+  var url = site + "/admin/processremovestock";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("POST", url, true);
+
+  fd = new FormData();
+  
+  fd.append("productid",productid);
+  fd.append("quantity",quantity);
+  
+
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+   doXHREvents(xml);
+   document.getElementById("bttn").style.display = "none";
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+        sessionchecker(xml.responseText);
+           document.getElementById("contents").innerHTML = xml.responseText;
+           //viewStocks();
+       }
+
+    }
+    xml.send(fd);
+}
+
+
+function activitylog()
+{
+  var url = site + "/admin/activitylog";
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("GET", url, true);
 
   doXHREvents(xml)
    xml.setRequestHeader("X-CSRF-TOKEN", t);
@@ -830,9 +1015,8 @@ function doflexiblesearch()
                 'copy', 'csv', 'excel', 'print'
             ]
         } );
-           
        }
 
     }
-    xml.send(fd);
+    xml.send();
 }

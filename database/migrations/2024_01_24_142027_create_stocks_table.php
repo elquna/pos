@@ -22,6 +22,7 @@ class CreateStocksTable extends Migration
             $table->integer('added_by')->nullable();
             $table->integer('quantity')->nullable();
             $table->string('expiry_date')->nullable();
+            $table->string('type')->default('credit')->comment('credit or debit');
         });
     }
 

@@ -58,6 +58,7 @@ class PagesController extends Controller
                       session(['id'=>$user->id]);
                       session(['name'=>$user->firstname. " ".$user->lastname]);
                       session(['branch_id'=>$user->branch_id]);
+                      session(['role'=>$user->role]);
                       
                       echo "yea";
 
@@ -65,6 +66,12 @@ class PagesController extends Controller
                   else{
                       return response()->json(['error'=>'Authentication failed', 'message'=>'Invalid login details', "error_code"=>"N0009"],200);
                   }
+      }
+
+      public function logout(Request $request)
+      {
+        $request->session()->flush();
+        return redirect()->route('home');
       }
 
 
@@ -295,6 +302,13 @@ class PagesController extends Controller
         return view('admin.Barcode')->with(['pro'=>$pro]);
       }
 
+      public function barcodesmall($serial)
+      {
+        $pro =  Product::where('slug',$serial)->first();
+        return view('admin.Barcode2')->with(['pro'=>$pro]);
+      }
+
+
 
       public function processcheckout(Request $request)
       {
@@ -372,16 +386,98 @@ class PagesController extends Controller
     
     public function flexiblehistory()
     {
-      
-        
-
         $orders = Order::orderby('id','desc')->take(100)->get();
         $sum = Order::orderby('id','desc')->take(100)->sum('subtotal');
-        
-
         return view('admin.FlexibleSales')->with(['orders'=>$orders, 'tot'=>$sum]);
     }
 
+    public function doflexiblesearch(Request $request)
+    {
+      $startdate = $request->startdate;
+      $enddate = $request->enddate;
+
+      $date1 = new \DateTime($startdate);
+      $date11 = $date1->format("Y-m-d 00:00:00");
+
+      $date2 = new \DateTime($enddate);
+      $date22 = $date2->format("Y-m-d 11:59:59");
+
+      echo $date11; echo $date22;
+      $orders = Order::where('created_at','>', $date11)
+      ->where('created_at','<', $date22)->get();
+
+      $sum = Order::where('created_at','<', $date11)
+      ->where('created_at','>', $date22)
+      ->sum('subtotal');
+      return view('admin.reloadd')->with(['orders'=>$orders, 'tot'=>$sum]);
+    }
+
+    public function openproducttoedit($slug)
+    {
+      $product = Product::where('slug',$slug)->first();
+      return view('admin.EditProductForm')->with(['pr'=>$product]);
+    }
+
+    public function processeditproduct(Request $request)
+    {
+      $this->sessionchecker();
+    
+        $pr = Product::where('id',$request->id)->first();
+      
+        $pr->price = $request->price;
+        $pr->name = $request->name;
+        $pr->save();
+
+        $action  = "Edited Product with name : ". $pr->name ;
+        $this->auditLogger($action, $pr, $request->ip());
+      }
+    
+
+      public function removestockform()
+      {
+        $pr =  Product::where('branch_id', session('branch_id'))
+        ->where('remaining','>',0)
+        ->get();
+        return view('admin.RemoveStockForm')->with(['pr'=>$pr]);
+      }
+
+
+      public function processremovestock(Request $request)
+      {
+        $this->sessionchecker();
+
+        $product = Product::where('id',$request->productid)->first();
+
+        if($product->remaining < $request->quantity)
+        {
+          echo "Failed, Stock Remaining is less than the quantity"; return;
+        }
+        
+        $stock = new Stock();
+        $stock->product_id = $request->productid;
+        $stock->quantity =  "-".$request->quantity;
+        $stock->category_id = $product->category_id;
+        $stock->branch_id = session('branch_id');
+        $stock->added_by = session('id');
+        $stock->type = "debit";
+        $stock->save();
+
+        $product->remaining = $product->remaining - $request->quantity;
+        $product->save();
+     
+    
+        $action  = "Removed stock from  product : ". $product->name ;
+        $this->auditLogger($action, $stock, $request->ip());
+        $st =  Stock::where('branch_id', session('branch_id'))->get();
+        return view('admin.ViewStock')->with(['st'=>$st]);
+      }
+
+
+      public function activitylog()
+      {
+        $st =  Activitylog::where('branch_id', session('branch_id'))->take(1000)->get();
+        return view('admin.AL')->with(['st'=>$st]);
+      }
 
 
   

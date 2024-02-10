@@ -33,7 +33,7 @@
 
     @for($i =1; $i< 20; $i++)
       
- <tr style="width:100%"> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}</td> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}</td> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}</td> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}</td> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}</td> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}</td></tr>
+ <tr style="width:100%"> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}<br><span style="float:left">{{$pro->price}}</span></td> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}<br><span style="float:left">{{$pro->price}}</span></td> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}<br><span style="float:left">{{$pro->price}}</span></td> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}<br><span style="float:left">{{$pro->price}}</span></td> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}<br><span style="float:left">{{$pro->price}}</span></td> <td class="smakk"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,20) !!}<br><span style="float:left">{{$pro->price}}</span></td></tr>
    
    
 
@@ -48,3 +48,7 @@
     <script src="" async defer></script>
   </body>
 </html>
+
+<script>
+  window.print();
+ </script> 

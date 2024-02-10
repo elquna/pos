@@ -54,3 +54,24 @@ Route::post('admin/deletefromcart', [PagesController::class,'deletefromcart']);
 Route::get('admin/saleshistory', [PagesController::class,'saleshistory']);
 
 Route::get('admin/flexiblehistory', [PagesController::class,'flexiblehistory']);
+
+Route::post('admin/doflexiblesearch', [PagesController::class,'doflexiblesearch']);
+
+
+Route::get('admin/barcodesmall/{serial}', [PagesController::class,'barcodesmall'])->name('barcodesmall');
+
+Route::get('logout', [PagesController::class,'logout'])->name('logout');
+
+Route::get('admin/barcodesmall/{serial}', [PagesController::class,'barcodesmall'])->name('barcodesmall');
+
+Route::get('admin/openproducttoedit/{slug}', [PagesController::class,'openproducttoedit']);
+
+Route::post('admin/processeditproduct', [PagesController::class,'processeditproduct']);
+
+Route::get('admin/removestockform', [PagesController::class,'removestockform']); 
+
+
+Route::post('admin/processremovestock', [PagesController::class,'processremovestock']); 
+
+Route::get('admin/activitylog', [PagesController::class,'activitylog']); 
+

@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="card-content">
                                     
-                                    <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1"><span>Login Console
+                                    <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1"><span>Login Console : Food and water Options
                                             </span></p>
                                     <div class="card-body">
                                         <span class="form-horizontal"  novalidate>

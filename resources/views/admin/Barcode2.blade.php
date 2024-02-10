@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
   
-        <title>Food and Water::Receipt </title>
+        <title>Food and Water Options::Barcode {{$pro->name}} </title>
         <style>
             * {
     font-size: 12px;
@@ -56,6 +56,10 @@ img {
     max-width: inherit;
     width: inherit;
 }
+.centered {
+    text-align: center;
+    align-content: center;
+}
 
 @media print {
     .hidden-print,
@@ -66,36 +70,18 @@ img {
         </style>
     </head>
     <body>
-        <div class="ticket">
-           <!--<img src="./logo.png" alt="Logo"> -->
-            <p class="centered">Food and Water Options LTD
-                <br>Call : 08099901110</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th class="quantity">Q.</th>
-                        <th class="description">Item</th>
-                        <th class="price">Sub</th>
-                    </tr>
-                </thead>
-                <tbody>
-                   <?php foreach ($pullcart as $key ) {?>
-                 
-                    <tr>
-                        <td class="quantity">{{$key->quantity}}</td>
-                        <td class="description">{{$key->product->name}}</td>
-                        <td class="price">₦{{$key->subtotal}}</td>
-                    </tr>
-                    <?php } ?>
-                    <tr>
-                        <td class="quantity"></td>
-                        <td class="description">Total</td>
-                        <td class="price">₦{{$order->subtotal}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="centered">Thanks for your patronage, Please come back next time.  <br> Track Id:{{$order->cartsession}} </p>
-            
+      <br>
+    <h2 style="">Barcode for {{$pro->name}}</h2>
+    <br>
+        <div class="ticket centered">
+        @for($i =1; $i< 20; $i++)
+        <div style="border:1px solid #000; margin-bottom:10px; padding:5px">
+       <div class="smakk" style="margin-top:7px"> {!! DNS1D::getBarcodeHTML($pro->slug, 'C128',1,15) !!}  </div>  <div style="">{{$pro->price}}</div>         
+        <div style="clear:both"></div>
+      </div>
+     
+          @endfor 
+           
         </div>
         <button id="btnPrint" class="hidden-print">Print</button> <button id="btnPrint" onclick="returnback()" class="hidden-print">Back</button>
       

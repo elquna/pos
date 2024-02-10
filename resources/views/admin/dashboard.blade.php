@@ -224,7 +224,7 @@
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">{{session('name')}}</span><span class="avatar avatar-online"><img src="../../../app-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span></a>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a><a class="dropdown-item" href="#"><i class="ft-clipboard"></i> Todo</a><a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href=""><i class="ft-power"></i> Logout</a>
+                                
                             </div>
                         </li>
                     </ul>
@@ -245,7 +245,7 @@
                 </li>
               
 
-                
+                <?php if(session('role') == 1){?>
                 <li class=" nav-item"><a href="#"><i class="la la-clipboard"></i><span class="menu-title" data-i18n="Invoice">Users</span></a>
                     <ul class="menu-content">
                         <li><a class="menu-item" href="javascript:void(0)" onclick="viewusers()"><i></i><span data-i18n="Invoice Summary">View Users</span></a>
@@ -255,6 +255,7 @@
                        
                     </ul>
                 </li>
+                <?php } ?>
 
 
                 <li class=" nav-item"><a href="#"><i class="la la-check-circle-o"></i><span class="menu-title" data-i18n="Components">Mangage Category</span></a>
@@ -288,10 +289,13 @@
                         <li><a class="menu-item" href="javascript:void(0)" onclick="viewstockavailable()"><i></i><span data-i18n="Spinners">View Available Stock</span></a>
                         </li>
 
-                        <li><a class="menu-item" href="javascript:void(0)" onclick="viewStocks()"><i></i><span data-i18n="Callout">View Stocks additions</span></a>
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="viewStocks()"><i></i><span data-i18n="Callout">View Stocks additions / Removal</span></a>
                         </li>
                      
                         <li><a class="menu-item" href="javascript:void(0)" onclick="addstockform()"><i></i><span data-i18n="Spinners">Add Stock </span></a>
+                        </li>
+
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="removestockform()"><i></i><span data-i18n="Spinners">Remove from Stock </span></a>
                         </li>
 
                         
@@ -308,6 +312,27 @@
                         </li>
 
                         <li><a class="menu-item" href="javascript:void(0)" onclick="flexiblehistory()"><i></i><span data-i18n="Basic Tables">Flexible Sales History</span></a>
+                        </li>
+                        
+                    </ul>
+                </li>
+
+                <li class=" nav-item"><a href="#"><i class="la la-shopping-cart"></i><span class="menu-title" data-i18n="Bootstrap Tables">Activity Logs</span></a>
+                    <ul class="menu-content">
+                       
+
+                        <li><a class="menu-item" href="javascript:void(0)" onclick="activitylog()" ><i></i><span data-i18n="Basic Tables">View Activities</span></a>
+                        </li>
+                        
+                    </ul>
+                </li>
+
+
+                <li class=" nav-item"><a href="#"><i class="la la-shopping-cart"></i><span class="menu-title" data-i18n="Bootstrap Tables">Logout</span></a>
+                    <ul class="menu-content">
+                       
+
+                        <li><a class="menu-item" href="{{route('logout')}}" ><i></i><span data-i18n="Basic Tables">Logout</span></a>
                         </li>
                         
                     </ul>
@@ -545,7 +570,11 @@
 
 <input  type="hidden" id="t_" value="{{ csrf_token()}}">
     <script>
-          var site = "<?php echo url('/');?>"
+          var site = "<?php echo url('/');?>";
+
+          makesales();
     </script>
 
     <div id="loader"></div>
+
+    
