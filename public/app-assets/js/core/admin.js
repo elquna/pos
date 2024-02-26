@@ -1020,3 +1020,37 @@ function activitylog()
     }
     xml.send();
 }
+
+
+function viewitemsinsales(id)
+{
+  var url = site + "/admin/viewitemsinsales/" + id;
+  var xml = new XMLHttpRequest();
+  var t = document.getElementById('t_').value;
+  var xml = new XMLHttpRequest();
+  xml.open("GET", url, true);
+
+  doXHREvents(xml)
+   xml.setRequestHeader("X-CSRF-TOKEN", t);
+    xml.onreadystatechange = function()
+    {
+        if(xml.status == 419)
+        {
+          location.reload();
+        }
+       if(xml.readyState == 4 && xml.status == 200)
+       {
+           sessionchecker(xml.responseText);
+           document.getElementById("openzone").style.display = "block";
+           document.getElementById("openzone").innerHTML = xml.responseText;
+       }
+
+    }
+    xml.send();
+}
+
+function closeopenzone()
+{
+  document.getElementById("openzone").style.display = "none";
+}
+

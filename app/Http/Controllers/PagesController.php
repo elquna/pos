@@ -386,7 +386,7 @@ class PagesController extends Controller
     
     public function flexiblehistory()
     {
-        $orders = Order::orderby('id','desc')->take(100)->get();
+        $orders = Order::orderby('id','desc')->take(400)->get();
         $sum = Order::orderby('id','desc')->take(100)->sum('subtotal');
         return view('admin.FlexibleSales')->with(['orders'=>$orders, 'tot'=>$sum]);
     }
@@ -477,6 +477,13 @@ class PagesController extends Controller
       {
         $st =  Activitylog::where('branch_id', session('branch_id'))->take(1000)->get();
         return view('admin.AL')->with(['st'=>$st]);
+      }
+
+      public function viewitemsinsales($id)
+      {
+          $order = Order::where('id', $id)->first();
+          $cart = Cart::where('cartsession', $order->cartsession)->with('product')->get();
+          return view('admin.ViewItemsinsale')->with(['cart'=>$cart]);
       }
 
 

@@ -577,4 +577,6 @@
 
     <div id="loader"></div>
 
+    <div id="openzone" style="position:fixed; top:100px; right:100px; width:600px;  border:1px solid #ccc; background:#fff;display:none;"> </div>
+
     

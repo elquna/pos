@@ -43,7 +43,7 @@
                                                 <td>{{$key->added_by}}</td>
                                                 <td>{{$key->customer_name}} : {{$key->phone}} </td>
                                                 <td>{{$key->paymethod}}</td>
-                                                <td><button>View Items</button></td>
+                                                <td><button onclick="viewitemsinsales('{{$key->id}}')">View Items</button></td>
                                             </tr>
 
                                             <?php } ?>

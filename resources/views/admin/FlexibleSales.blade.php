@@ -48,7 +48,7 @@
                                                 <td>{{$key->added_by}}</td>
                                                 <td>{{$key->customer_name}} : {{$key->phone}} </td>
                                                 <td>{{$key->paymethod}}</td>
-                                                <td><button>View Items</button></td>
+                                                <td><button onclick="viewitemsinsales('{{$key->id}}')">View Items</button></td>
                                             </tr>
 
                                             <?php } ?>
@@ -61,5 +61,5 @@
                     </div>
                 </div>
                 <br>
-                Sum for last 100 sales : Total  N{{number_format($tot,2)}}
+                Sum for last 400 sales : Total  N{{number_format($tot,2)}}
                 <!-- Bordered striped end -->

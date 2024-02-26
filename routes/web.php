@@ -75,3 +75,6 @@ Route::post('admin/processremovestock', [PagesController::class,'processremovest
 
 Route::get('admin/activitylog', [PagesController::class,'activitylog']); 
 
+Route::get('admin/activitylog', [PagesController::class,'activitylog']); 
+
+Route::get('admin/viewitemsinsales/{id}', [PagesController::class,'viewitemsinsales']); 
